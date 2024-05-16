@@ -1,15 +1,16 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import toast from "react-hot-toast";
 
 const ALLOWED_FILE_TYPES = [
-	'audio/mpeg',
 	'audio/mp4',
-	'audio/wav',
 	'audio/m4a',
-	'audio/webm',
+	'audio/wav',
+	'audio/x-mp4',
+	'audio/x-m4a',
+	'audio/x-wav',
 ]
 
-export default function FileUpload({setTranscript}) {
+export default function FileUpload({ setTranscript }) {
 	const [file, setFile] = useState();
 	const [uploading, setUploading] = useState(false)
 
@@ -17,8 +18,10 @@ export default function FileUpload({setTranscript}) {
 		if (e.target.files) {
 			let file = e.target.files[0]
 
+			console.log("file-type:", file.type)
+
 			if (ALLOWED_FILE_TYPES.indexOf(file.type) === -1) {
-				toast.error('Only mp3, mp4, mpeg, mpga, m4a, wav, or webm files are allowed')
+				toast.error('Only mp4, m4a, or wav files are allowed')
 				return
 			}
 			setFile(file);
@@ -53,7 +56,7 @@ export default function FileUpload({setTranscript}) {
 		<div className="mb-1">
 			<div>
 				<label htmlFor="formFile" className="mb-2 inline-block">
-					Upload a PDF File
+					上传一个音频文件
 				</label>
 				<input
 					className="relative file:bg-secondary file:uppercase text-xs file:text-xs file:px-6 file:pb-2 file:pt-2.5 text-secondary m-0 block w-full min-w-0 flex-auto rounded border border-solid border-[#DEF2F1] bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-white file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem]"
